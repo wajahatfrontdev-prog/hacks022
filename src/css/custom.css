@@ -1,0 +1,364 @@
+/**
+ * Any CSS included here will be global. The classic template
+ * bundles Infima by default. Infima is a CSS framework designed to
+ * work well for content-centric websites.
+ */
+
+/* You can override the default Infima variables here. */
+:root {
+  --ifm-color-primary: #2e8555;
+  --ifm-color-primary-dark: #29784c;
+  --ifm-color-primary-darker: #277148;
+  --ifm-color-primary-darkest: #205d3b;
+  --ifm-color-primary-light: #33925d;
+  --ifm-color-primary-lighter: #359962;
+  --ifm-color-primary-lightest: #3cad6e;
+  --ifm-code-font-size: 95%;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+}
+
+/* For readability concerns, you should choose a lighter palette in dark mode. */
+[data-theme='dark'] {
+  --ifm-color-primary: #25c2a0;
+  --ifm-color-primary-dark: #21af90;
+  --ifm-color-primary-darker: #1fa588;
+  --ifm-color-primary-darkest: #1a8870;
+  --ifm-color-primary-light: #29d5b0;
+  --ifm-color-primary-lighter: #32d8b4;
+  --ifm-color-primary-lightest: #4fddbf;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+}
+
+/* Ensure hero text and key CTA colors are visible in both themes */
+[data-theme='light'] .heroBanner,
+[data-theme='dark'] .heroBanner {
+  color: #ffffff;
+}
+[data-theme='light'] .heroSubtitle,
+[data-theme='dark'] .heroSubtitle {
+  color: rgba(255,255,255,0.88);
+}
+
+/* In light mode, keep module cards and stat cards readable */
+[data-theme='light'] .moduleCard,
+[data-theme='light'] .statCard,
+[data-theme='light'] .featureCard {
+  background: linear-gradient(180deg, #0b1020, #050814);
+  color: #e8eefc;
+}
+
+/* Improved global footer styles */
+.footer {
+  background: linear-gradient(180deg,#020317 0%, #000 100%);
+  color: #dbe7ff;
+  border-top: 1px solid rgba(255,255,255,0.04);
+}
+.footer__inner {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 2.25rem 0;
+  flex-wrap: wrap;
+}
+.footer__links {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+.footer__link-item h3 {
+  margin: 0 0 0.5rem 0;
+  color: #fff;
+}
+.footer a {
+  color: #9fb7ff;
+  text-decoration: none;
+}
+.footer a:hover { color: #dff0ff; text-decoration: underline; }
+.footer .footer__bottom {
+  text-align: center;
+  padding: 1rem 0 2.25rem;
+  color: #9aa3cc;
+  font-size: 0.95rem;
+}
+.footer .social-link {
+  display: inline-block;
+  margin-right: 0.6rem;
+  color: #cfe6ff;
+  background: rgba(255,255,255,0.03);
+  padding: 0.35rem 0.6rem;
+  border-radius: 8px;
+}
+
+@media (max-width: 800px) {
+  .footer__inner { flex-direction: column; gap: 1rem; }
+  .footer__links { gap: 1rem; }
+}
+
+/* Theme-consistent feature section styles: ensure visibility in both light and dark modes */
+[data-theme='dark'] .featuresSection {
+  background: #020617;
+  color: var(--ifm-color-white, #e8eefc);
+}
+[data-theme='dark'] .featureCard {
+  background: linear-gradient(180deg,#07102a,#030416);
+  border: 1px solid rgba(127,156,255,0.06);
+  color: var(--ifm-color-white, #e6eefc);
+}
+[data-theme='dark'] .featureCard h3 { color: var(--ifm-color-white, #e6eefc); }
+[data-theme='dark'] .featureCard p { color: rgba(255,255,255,0.78); }
+[data-theme='dark'] .sectionTitle, [data-theme='dark'] .featuresSection .sectionTitle { color: var(--ifm-color-white, #e8eefc); }
+
+[data-theme='light'] .featuresSection {
+  /* lighter background so section stands out on the light site background */
+  background: linear-gradient(180deg,#f7fafc,#eef2f7);
+  color: #071027;
+}
+[data-theme='light'] .featureCard {
+  background: linear-gradient(180deg,#ffffff,#f8fafc);
+  border: 1px solid rgba(16,24,40,0.06);
+  color: #071027;
+}
+[data-theme='light'] .featureCard h3 { color: #071027; }
+[data-theme='light'] .featureCard p { color: #475569; }
+[data-theme='light'] .sectionTitle, [data-theme='light'] .featuresSection .sectionTitle { color: #071027; }
+
+/* Ensure module/stat cards also keep contrast in light theme */
+[data-theme='light'] .moduleCard, [data-theme='light'] .statCard {
+  background: linear-gradient(180deg,#ffffff,#f7f9fb);
+  color: #071027;
+  border: 1px solid rgba(16,24,40,0.06);
+}
+[data-theme='light'] .moduleText, [data-theme='light'] .moduleBullets, [data-theme='light'] .statCard p { color: #475569; }
+
+/* Small tweak: ensure section titles have weight and spacing */
+.featuresSection .sectionTitle { font-weight:700; margin-bottom: 0.75rem; }
+
+/* ===== COMPLETE LIGHT MODE OVERRIDES FOR HOMEPAGE ===== */
+html[data-theme='light'] {
+  background: #ffffff;
+  color: #1a202c;
+}
+
+html[data-theme='light'] body {
+  background: #ffffff;
+}
+
+html[data-theme='light'] main {
+  background: #ffffff;
+}
+
+/* Hero section light mode */
+html[data-theme='light'] .heroBanner {
+  background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
+  color: #1a202c;
+}
+
+html[data-theme='light'] .heroTitle {
+  color: #0f172a;
+}
+
+html[data-theme='light'] .heroSubtitle {
+  color: #475569;
+}
+
+html[data-theme='light'] .heroLead p {
+  color: #475569;
+}
+
+html[data-theme='light'] .pill {
+  border: 1px solid #cbd5e1;
+  background: #f8fafc;
+  color: #334155;
+}
+
+html[data-theme='light'] .statCard {
+  background: linear-gradient(180deg, #ffffff, #f8fafc);
+  border: 1px solid #e2e8f0;
+  color: #1a202c;
+}
+
+html[data-theme='light'] .statCard h4 {
+  color: #0f172a;
+}
+
+html[data-theme='light'] .statCard p {
+  color: #475569;
+}
+
+html[data-theme='light'] .statAction {
+  background: linear-gradient(90deg, #3b82f6, #2563eb);
+  color: #ffffff;
+}
+
+html[data-theme='light'] .heroCard {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  color: #1a202c;
+}
+
+html[data-theme='light'] .heroCardLabel {
+  color: #64748b;
+}
+
+html[data-theme='light'] .heroList {
+  color: #334155;
+}
+
+html[data-theme='light'] .heroCTAs .button--primary {
+  background: linear-gradient(90deg, #3b82f6, #2563eb);
+  color: #ffffff;
+  border: none;
+}
+
+html[data-theme='light'] .heroCTAs .button--secondary {
+  background: #f1f5f9;
+  color: #0f172a;
+  border: 1px solid #cbd5e1;
+}
+
+/* Modules grid section light mode */
+html[data-theme='light'] .section {
+  background: #f7f9fc;
+  color: #1a202c;
+}
+
+html[data-theme='light'] .sectionTitle {
+  color: #0f172a;
+}
+
+html[data-theme='light'] .sectionSubtitle {
+  color: #64748b;
+}
+
+html[data-theme='light'] .moduleCard {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  color: #1a202c;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+html[data-theme='light'] .moduleCard:hover {
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+  border-color: #cbd5e1;
+}
+
+html[data-theme='light'] .moduleTag {
+  color: #3b82f6;
+}
+
+html[data-theme='light'] .moduleTitle {
+  color: #0f172a;
+}
+
+html[data-theme='light'] .moduleText {
+  color: #475569;
+}
+
+html[data-theme='light'] .moduleBullets {
+  color: #64748b;
+}
+
+html[data-theme='light'] .moduleLink {
+  color: #0ea5e9;
+}
+
+html[data-theme='light'] .moduleIcon {
+  background: #f1f5f9;
+  color: #3b82f6;
+}
+
+/* Strip section light mode */
+html[data-theme='light'] .stripSection {
+  background: linear-gradient(180deg, #f1f5f9, #f7f9fc);
+  color: #1a202c;
+}
+
+html[data-theme='light'] .stripTitle {
+  color: #0f172a;
+}
+
+html[data-theme='light'] .stripText {
+  color: #475569;
+}
+
+html[data-theme='light'] .stripPoint {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  color: #334155;
+}
+
+html[data-theme='light'] .stripIcon {
+  background: #3b82f6;
+  color: #ffffff;
+}
+
+/* Features section light mode */
+html[data-theme='light'] .featuresSection {
+  background: linear-gradient(180deg, #f7f9fc, #f1f5f9);
+  color: #1a202c;
+}
+
+html[data-theme='light'] .featuresSection .sectionTitle {
+  color: #0f172a;
+}
+
+html[data-theme='light'] .featureCard {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  color: #1a202c;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+html[data-theme='light'] .featureCard h3 {
+  color: #0f172a;
+}
+
+html[data-theme='light'] .featureCard p {
+  color: #475569;
+}
+
+/* CTA section light mode */
+html[data-theme='light'] .ctaSection {
+  background: linear-gradient(180deg, #f7f9fc, #f1f5f9);
+  color: #1a202c;
+}
+
+html[data-theme='light'] .ctaSection .button--primary {
+  background: linear-gradient(90deg, #3b82f6, #2563eb);
+  color: #ffffff;
+}
+
+html[data-theme='light'] .ctaSection .button--secondary {
+  background: #f1f5f9;
+  color: #0f172a;
+  border: 1px solid #cbd5e1;
+}
+
+/* Footer light mode */
+html[data-theme='light'] .footer {
+  background: #f5f5f5;
+  color: #475569;
+  border-top: 1px solid #e2e8f0;
+}
+
+html[data-theme='light'] .footer__link-item h3 {
+  color: #1a202c;
+}
+
+html[data-theme='light'] .footer a {
+  color: #3b82f6;
+}
+
+html[data-theme='light'] .footer a:hover {
+  color: #1e40af;
+}
+
+html[data-theme='light'] .footer .footer__bottom {
+  color: #64748b;
+}
+
+html[data-theme='light'] .footer .social-link {
+  background: #e2e8f0;
+  color: #334155;
+}
