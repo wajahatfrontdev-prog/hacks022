@@ -1,4 +1,4 @@
-export default async function handler(req, res) {
+async function handler(req, res) {
   try {
     const HF_BACKEND = process.env.HF_BACKEND_URL || 'https://wajahat1313-ragbot-backend.hf.space';
     // Build target path: forward the path after /api
@@ -24,7 +24,8 @@ export default async function handler(req, res) {
 
     // Stream back response with correct content-type
     const contentType = backendRes.headers.get('content-type') || 'application/octet-stream';
-    const buf = Buffer.from(await backendRes.arrayBuffer());
+    const arr = await backendRes.arrayBuffer();
+    const buf = Buffer.from(arr);
 
     res.status(backendRes.status);
     res.setHeader('content-type', contentType);
@@ -34,3 +35,5 @@ export default async function handler(req, res) {
     res.status(500).json({ error: 'proxy_error', detail: String(err) });
   }
 }
+
+module.exports = handler;
