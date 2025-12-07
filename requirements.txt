@@ -1,11 +1,13 @@
 fastapi
-uvicorn
+uvicorn[standard]
 groq
 qdrant-client
 sqlalchemy
 pydantic
+pydantic-settings
 python-dotenv
 langchain
 langchain-community
 langchain-groq
 langchain-qdrant
+python-multipart
