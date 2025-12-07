@@ -1,5 +1,14 @@
 async function handler(req, res) {
   try {
+    // Allow CORS
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+    if (req.method === 'OPTIONS') {
+      return res.status(200).end();
+    }
+
     const HF_BACKEND = process.env.HF_BACKEND_URL || 'https://wajahat1313-ragbot-backend.hf.space';
     // Build target path: forward the path after /api
     const path = (req.url || '').replace(/^\/api/, '') || '/';
@@ -9,20 +18,33 @@ async function handler(req, res) {
     // Copy relevant headers
     if (req.headers) {
       for (const k of Object.keys(req.headers)) {
-        if (k.toLowerCase() === 'host') continue;
+        const lower = k.toLowerCase();
+        if (lower === 'host' || lower === 'connection') continue;
         headers[k] = req.headers[k];
+      }
+    }
+
+    // For POST/PUT, read the body and serialize
+    let body;
+    if (req.method !== 'GET' && req.method !== 'HEAD') {
+      if (typeof req.body === 'string') {
+        body = req.body;
+      } else if (req.body) {
+        body = JSON.stringify(req.body);
+      } else {
+        body = '';
       }
     }
 
     const fetchInit = {
       method: req.method,
       headers,
-      body: req.method === 'GET' || req.method === 'HEAD' ? undefined : JSON.stringify(req.body || {})
+      body
     };
 
     const backendRes = await fetch(target, fetchInit);
 
-    // Stream back response with correct content-type
+    // Get response body as Buffer or text
     const contentType = backendRes.headers.get('content-type') || 'application/octet-stream';
     const arr = await backendRes.arrayBuffer();
     const buf = Buffer.from(arr);
@@ -31,7 +53,7 @@ async function handler(req, res) {
     res.setHeader('content-type', contentType);
     res.send(buf);
   } catch (err) {
-    console.error('proxy error', err);
+    console.error('proxy error:', err);
     res.status(500).json({ error: 'proxy_error', detail: String(err) });
   }
 }
