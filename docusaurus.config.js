@@ -75,6 +75,12 @@ const config = {
             label: 'GitHub',
             position: 'right',
           },
+          // Chatbot link
+          {
+            to: '/ragbot',
+            label: 'Chatbot',
+            position: 'right',
+          },
         ],
       },
       footer: {
