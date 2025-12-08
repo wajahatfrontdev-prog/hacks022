@@ -52,6 +52,7 @@ export function ChatInterface({ sessionId: initialSessionId, apiUrl = '/api' }) 
   const [sources, setSources] = useState([]);
   const [error, setError] = useState('');
   const [copiedIdx, setCopiedIdx] = useState(-1);
+  const [feedback, setFeedback] = useState({});
   const messagesEndRef = useRef(null);
 
   // Scroll to bottom
@@ -214,41 +215,58 @@ export function ChatInterface({ sessionId: initialSessionId, apiUrl = '/api' }) 
                 ? 'I\'ll search the entire book for relevant information.'
                 : 'I\'ll answer based on your selected text only.'}
             </p>
+            <div className={styles.quickReplies}>
+              <button onClick={() => setQuery('What is ROS2?')} className={styles.quickReply}>What is ROS2?</button>
+              <button onClick={() => setQuery('Explain digital twins')} className={styles.quickReply}>Explain digital twins</button>
+              <button onClick={() => setQuery('Tell me about NVIDIA Isaac')} className={styles.quickReply}>Tell me about NVIDIA Isaac</button>
+            </div>
           </div>
-        )}
+        )
 
         {messages.map((message, idx) => (
           <div key={idx} className={`${styles.message} ${styles[message.role]}`}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '10px' }}>
-              <div className={styles.messageContent} style={{ flex: 1 }}>
-                {message.role === 'assistant' ? (
-                  <FormattedResponse content={message.content} />
-                ) : (
-                  message.content
-                )}
-              </div>
+            <div className={styles.messageContent}>
+              {message.role === 'assistant' ? (
+                <FormattedResponse content={message.content} />
+              ) : (
+                message.content
+              )}
+            </div>
+            <div className={styles.messageFooter}>
+              <span className={styles.timestamp}>
+                {new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}
+              </span>
               {message.role === 'assistant' && (
-                <button
-                  onClick={() => copyToClipboard(message.content, idx)}
-                  style={{
-                    background: 'none',
-                    border: 'none',
-                    cursor: 'pointer',
-                    fontSize: '16px',
-                    padding: '4px 8px',
-                    whiteSpace: 'nowrap'
-                  }}
-                  title="Copy response"
-                >
-                  {copiedIdx === idx ? '✓' : '📋'}
-                </button>
+                <div className={styles.messageActions}>
+                  <button
+                    onClick={() => copyToClipboard(message.content, idx)}
+                    className={styles.actionBtn}
+                    title="Copy"
+                  >
+                    {copiedIdx === idx ? '✓' : '📋'}
+                  </button>
+                  <button
+                    onClick={() => setFeedback({...feedback, [idx]: 'up'})}
+                    className={`${styles.actionBtn} ${feedback[idx] === 'up' ? styles.active : ''}`}
+                    title="Good response"
+                  >
+                    👍
+                  </button>
+                  <button
+                    onClick={() => setFeedback({...feedback, [idx]: 'down'})}
+                    className={`${styles.actionBtn} ${feedback[idx] === 'down' ? styles.active : ''}`}
+                    title="Bad response"
+                  >
+                    👎
+                  </button>
+                </div>
               )}
             </div>
             {message.role === 'assistant' && message.sources && message.sources.length > 0 && (
               <SourceDisplay sources={message.sources} />
             )}
           </div>
-        ))}
+        ))
 
         {loading && (
           <div className={styles.message + ' ' + styles.assistant}>
