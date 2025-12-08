@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Response
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from groq import Groq
@@ -6,15 +6,10 @@ import os
 
 app = FastAPI()
 
-# CORS must be added before routes
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "https://physical-ai-humanoid-robotics-hacka.vercel.app",
-        "http://localhost:3000",
-        "*"
-    ],
-    allow_credentials=True,
+    allow_origins=["*"],
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -26,12 +21,11 @@ class ChatRequest(BaseModel):
     session_id: str = None
     user_id: str = "anonymous"
 
-@app.options("/api/chat")
-async def chat_options():
-    return {"status": "ok"}
-
 @app.post("/api/chat")
-async def chat(request: ChatRequest):
+async def chat(request: ChatRequest, response: Response):
+    response.headers["Access-Control-Allow-Origin"] = "*"
+    response.headers["Access-Control-Allow-Methods"] = "POST, OPTIONS"
+    response.headers["Access-Control-Allow-Headers"] = "*"
     try:
         client = Groq(api_key=os.getenv("GROQ_API_KEY"))
         
