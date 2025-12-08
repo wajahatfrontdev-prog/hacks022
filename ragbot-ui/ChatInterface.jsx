@@ -221,7 +221,7 @@ export function ChatInterface({ sessionId: initialSessionId, apiUrl = '/api' }) 
               <button onClick={() => setQuery('Tell me about NVIDIA Isaac')} className={styles.quickReply}>Tell me about NVIDIA Isaac</button>
             </div>
           </div>
-        )
+        )}
 
         {messages.map((message, idx) => (
           <div key={idx} className={`${styles.message} ${styles[message.role]}`}>
@@ -266,7 +266,7 @@ export function ChatInterface({ sessionId: initialSessionId, apiUrl = '/api' }) 
               <SourceDisplay sources={message.sources} />
             )}
           </div>
-        ))
+        ))}
 
         {loading && (
           <div className={styles.message + ' ' + styles.assistant}>
