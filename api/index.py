@@ -1,36 +1,17 @@
-"""
-Vercel serverless FastAPI handler for RAG chatbot backend.
-This wraps the FastAPI app from ragbot-api/main.py to run on Vercel.
-"""
 import sys
 import os
 from pathlib import Path
 
-# Add parent directory to path so we can import ragbot-api modules
 sys.path.insert(0, str(Path(__file__).parent.parent / 'ragbot-api'))
 
-# Set environment defaults for Vercel
-os.environ.setdefault('GROQ_API_KEY', '')
-os.environ.setdefault('QDRANT_URL', '')
-os.environ.setdefault('QDRANT_API_KEY', '')
-os.environ.setdefault('DATABASE_URL', 'sqlite:///./chat.db')
-os.environ.setdefault('FRONTEND_URL', 'https://hacks022.vercel.app')
-os.environ.setdefault('EMBEDDINGS_PROVIDER', 'hf')
-os.environ.setdefault('HUGGINGFACE_API_KEY', '')
-os.environ.setdefault('EMBEDDINGS_HF_MODEL', 'sentence-transformers/all-MiniLM-L6-v2')
+os.environ.setdefault('GROQ_API_KEY', os.getenv('GROQ_API_KEY', ''))
+os.environ.setdefault('QDRANT_URL', os.getenv('QDRANT_URL', ''))
+os.environ.setdefault('QDRANT_API_KEY', os.getenv('QDRANT_API_KEY', ''))
+os.environ.setdefault('DATABASE_URL', os.getenv('DATABASE_URL', 'sqlite:///./chat.db'))
+os.environ.setdefault('FRONTEND_URL', os.getenv('FRONTEND_URL', 'https://hacks022.vercel.app'))
+os.environ.setdefault('EMBEDDINGS_PROVIDER', os.getenv('EMBEDDINGS_PROVIDER', 'hf'))
+os.environ.setdefault('HUGGINGFACE_API_KEY', os.getenv('HUGGINGFACE_API_KEY', ''))
 
-# Import the FastAPI app
 from main import app
-from fastapi.middleware.cors import CORSMiddleware
 
-# Add CORS middleware for frontend on Vercel
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
-# Export app for Vercel
-handler = app
+app = app
