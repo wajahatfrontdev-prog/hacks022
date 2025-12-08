@@ -32,7 +32,5 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Vercel calls this handler for HTTP requests to /api/*
-async def handler(request):
-    """Vercel serverless handler for FastAPI."""
-    return app(request)
+# Export app for Vercel
+handler = app
