@@ -1,13 +1,3 @@
-# Vercel Python serverless dependencies for RAG Chatbot
-fastapi==0.104.1
-pydantic==2.5.0
-pydantic-settings==2.1.0
-sqlalchemy==2.0.23
-qdrant-client==1.16.1
-groq==0.4.1
-# For Vercel deployments we prefer using a remote embeddings provider (HuggingFace)
-# to avoid installing heavy packages like torch. Set EMBEDDINGS_PROVIDER=hf and
-# HUGGINGFACE_API_KEY in Vercel environment variables to enable remote embeddings.
-python-multipart==0.0.6
-python-dotenv==1.0.0
-requests==2.31.0
+fastapi
+groq
+pydantic
