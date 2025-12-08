@@ -15,6 +15,9 @@ os.environ.setdefault('QDRANT_URL', '')
 os.environ.setdefault('QDRANT_API_KEY', '')
 os.environ.setdefault('DATABASE_URL', 'sqlite:///./chat.db')
 os.environ.setdefault('FRONTEND_URL', 'https://hacks022.vercel.app')
+os.environ.setdefault('EMBEDDINGS_PROVIDER', 'hf')
+os.environ.setdefault('HUGGINGFACE_API_KEY', '')
+os.environ.setdefault('EMBEDDINGS_HF_MODEL', 'sentence-transformers/all-MiniLM-L6-v2')
 
 # Import the FastAPI app
 from main import app

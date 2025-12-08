@@ -132,6 +132,48 @@
 
 ## Part 3: Connect Frontend & Backend
 
+## Option C: Deploy Backend as a Vercel Serverless Function (Alternative to Render/HF)
+
+If you want to host the entire backend on Vercel alongside the frontend (single platform), this repo includes a serverless wrapper at `/api/index.py` and a function requirements file at `/api/requirements.txt`.
+
+Notes and constraints:
+- Vercel serverless functions have runtime and memory limits. Installing large binary packages like `torch` and `sentence-transformers` can fail during build. To avoid this, the repo supports using remote embeddings via the Hugging Face Inference API (`EMBEDDINGS_PROVIDER=hf`).
+
+Steps:
+
+1. In your Vercel project, ensure `vercel.json` maps `"/api/(.*)"` to `/api/index.py` — this is already present in the repo.
+
+2. Add the following Environment Variables in Vercel Settings (Production & Preview):
+
+```text
+GROQ_API_KEY=<YOUR_GROQ_API_KEY>
+QDRANT_URL=<QDRANT_CLOUD_URL>
+QDRANT_API_KEY=<QDRANT_API_KEY>
+DATABASE_URL=<DATABASE_URL>    # sqlite for small deployments or Postgres for production
+FRONTEND_URL=https://hacks022.vercel.app
+EMBEDDINGS_PROVIDER=hf         # recommended for Vercel to avoid torch
+HUGGINGFACE_API_KEY=<HF_TOKEN> # required when EMBEDDINGS_PROVIDER=hf
+EMBEDDINGS_HF_MODEL=sentence-transformers/all-MiniLM-L6-v2  # optional
+```
+
+3. Deploy: Push to the `main` branch — Vercel will run the build and create the serverless function. The function installs the lighter `/api/requirements.txt` and will use Hugging Face Inference to generate embeddings at runtime when `EMBEDDINGS_PROVIDER=hf`.
+
+4. Test the endpoints after deployment:
+
+```bash
+# Health
+curl https://<your-vercel-site>.vercel.app/api/health
+
+# Chat (example)
+curl -X POST https://<your-vercel-site>.vercel.app/api/chat \
+   -H "Content-Type: application/json" \
+   -d '{"query":"Who built ROS2?","mode":"fullbook","user_id":"deploy_test"}'
+```
+
+5. If you must use local sentence-transformers on Vercel (not recommended), ensure `api/requirements.txt` includes `sentence-transformers` and `torch` and the function is allocated sufficient memory and build time. Be prepared for longer build times and potential install failures.
+
+If the Vercel function returns a plain-text error referencing an upstream service (for example: "Your space is in error"), it indicates the serverless build invoked an upstream HF space or that environment variables are missing/incorrect. Confirm your secrets and retry.
+
 Once both are deployed:
 
 1. **Update Frontend API URL:**

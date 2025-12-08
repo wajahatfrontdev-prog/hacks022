@@ -656,6 +656,21 @@ Visit: `http://localhost:8000/docs` for OpenAPI UI
    - Environment variables:
      - `REACT_APP_API_URL=https://your-render-service-url`
 
+If you plan to host the backend in Vercel serverless functions instead of Render/other platforms, set the following additional Vercel environment variables in the project settings (Environment → Production / Preview):
+
+- `GROQ_API_KEY` — your Groq API key for model/chat completions
+- `QDRANT_URL` — your Qdrant cloud URL
+- `QDRANT_API_KEY` — your Qdrant API key
+- `DATABASE_URL` — e.g. `sqlite:///./chat.db` for small deployments or a Postgres URL for production
+- `FRONTEND_URL` — e.g. `https://<your-vercel-site>.vercel.app`
+- `EMBEDDINGS_PROVIDER` — set to `hf` to use Hugging Face Inference service for embeddings (recommended on Vercel to avoid heavy torch installs)
+- `HUGGINGFACE_API_KEY` — Hugging Face Inference token used when EMBEDDINGS_PROVIDER=hf
+- `EMBEDDINGS_HF_MODEL` — (optional) the HF embeddings model name: `sentence-transformers/all-MiniLM-L6-v2` by default
+
+Notes:
+- Vercel serverless environment may struggle to install large binary packages like `torch`. Setting `EMBEDDINGS_PROVIDER=hf` lets the function use the Hugging Face Inference API for query embeddings (no torch required). Make sure `HUGGINGFACE_API_KEY` is configured as a project secret.
+- The serverless function for this repo is under `/api/index.py` and uses `api/requirements.txt` (lighter requirements). For local development or dedicated backend servers, keep `ragbot-api/requirements.txt` for full installs including `sentence-transformers` and `torch`.
+
 4. **Deploy**
    - Click Deploy
    - Wait for build completion

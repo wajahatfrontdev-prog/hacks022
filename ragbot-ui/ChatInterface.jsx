@@ -136,11 +136,32 @@ export function ChatInterface({ sessionId: initialSessionId, apiUrl = '/api' }) 
       });
 
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.detail || 'Chat failed');
+        // Try to parse JSON error; if not JSON (HTML/text from upstream), read text
+        const ctErr = response.headers.get('content-type') || '';
+        if (ctErr.includes('application/json')) {
+          const errorData = await response.json();
+          throw new Error(errorData.detail || 'Chat failed');
+        } else {
+          const txt = await response.text();
+          throw new Error(txt || 'Chat failed with non-JSON response');
+        }
       }
 
-      const data = await response.json();
+      // On success: prefer JSON but gracefully handle text/html payloads
+      let data;
+      const ct = response.headers.get('content-type') || '';
+      if (ct.includes('application/json')) {
+        try {
+          data = await response.json();
+        } catch (parseErr) {
+          const txt = await response.text();
+          data = { response: txt, sources: [], mode };
+        }
+      } else {
+        // Non-JSON but OK — treat the response body as plain text
+        const txt = await response.text();
+        data = { response: txt, sources: [], mode };
+      }
 
       setSources(data.sources || []);
       const assistantMessage = {

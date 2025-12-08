@@ -127,6 +127,23 @@ class TestIngestEndpoint:
         assert response.status_code in [200, 500]
 
 
+def test_non_json_error_is_wrapped():
+    """If a handler returns a non-JSON error (plain text / HTML), middleware should wrap it in JSON."""
+    # Add a quick debug route that returns plain text with a 500
+    from fastapi.responses import PlainTextResponse
+
+    @app.get("/debug/plain-error")
+    async def plain_error():
+        return PlainTextResponse("Your space is in error, check its status on hf.co", status_code=500)
+
+    response = client.get('/debug/plain-error')
+    assert response.status_code == 500
+    data = response.json()
+    assert isinstance(data, dict)
+    assert 'detail' in data
+    assert 'Your space' in data['detail']
+
+
 class TestRatingEndpoint:
     """Test message rating endpoint"""
     
