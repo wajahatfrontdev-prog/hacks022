@@ -14,12 +14,14 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+from typing import Optional
+
 class ChatRequest(BaseModel):
     query: str
     mode: str = "fullbook"
-    selected_text: str = None
-    session_id: str = None
-    user_id: str = "anonymous"
+    selected_text: Optional[str] = None
+    session_id: Optional[str] = None
+    user_id: Optional[str] = "anonymous"
 
 @app.post("/api/chat")
 async def chat(request: ChatRequest, response: Response):

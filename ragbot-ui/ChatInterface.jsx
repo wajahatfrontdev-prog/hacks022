@@ -122,10 +122,13 @@ export function ChatInterface({ sessionId: initialSessionId, apiUrl = '/api' }) 
       const requestBody = {
         query: query,
         mode: mode,
-        selected_text: mode === 'selected' ? selectedText : null,
-        session_id: sessionId,
-        user_id: 'user_' + sessionId
+        session_id: sessionId || 'default',
+        user_id: 'user_' + (sessionId || 'default')
       };
+      
+      if (mode === 'selected' && selectedText) {
+        requestBody.selected_text = selectedText;
+      }
 
       const response = await fetch(`${apiUrl}/api/chat`, {
         method: 'POST',
@@ -137,7 +140,8 @@ export function ChatInterface({ sessionId: initialSessionId, apiUrl = '/api' }) 
 
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({ detail: 'Chat failed' }));
-        throw new Error(errorData.detail || 'Chat failed');
+        const errorMsg = typeof errorData.detail === 'string' ? errorData.detail : JSON.stringify(errorData.detail || errorData);
+        throw new Error(errorMsg);
       }
 
       const data = await response.json();

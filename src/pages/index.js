@@ -6,6 +6,7 @@ import Layout from '@theme/Layout';
 import Heading from '@theme/Heading';
 import styles from './index.module.css';
 import lottie from 'lottie-web';
+import FloatingChatbot from '../components/FloatingChatbot';
 
 function HomepageHeader() {
   const {siteConfig} = useDocusaurusContext();
@@ -221,6 +222,7 @@ export default function Home() {
           </div>
         </section>
       </main>
+      <FloatingChatbot />
     </Layout>
   );
 }
