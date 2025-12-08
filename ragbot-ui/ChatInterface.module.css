@@ -186,6 +186,7 @@
   transition: all 0.3s;
   background: white;
   font-weight: 500;
+  color: #000;
 }
 
 .input:focus {
