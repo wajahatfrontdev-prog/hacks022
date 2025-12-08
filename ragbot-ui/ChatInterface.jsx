@@ -127,7 +127,7 @@ export function ChatInterface({ sessionId: initialSessionId, apiUrl = '/api' }) 
         user_id: 'user_' + sessionId
       };
 
-      const response = await fetch(`${apiUrl}/chat`, {
+      const response = await fetch(`${apiUrl}/api/chat`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
