@@ -6,9 +6,14 @@ import os
 
 app = FastAPI()
 
+# CORS must be added before routes
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[
+        "https://physical-ai-humanoid-robotics-hacka.vercel.app",
+        "http://localhost:3000",
+        "*"
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -20,6 +25,10 @@ class ChatRequest(BaseModel):
     selected_text: str = None
     session_id: str = None
     user_id: str = "anonymous"
+
+@app.options("/api/chat")
+async def chat_options():
+    return {"status": "ok"}
 
 @app.post("/api/chat")
 async def chat(request: ChatRequest):
