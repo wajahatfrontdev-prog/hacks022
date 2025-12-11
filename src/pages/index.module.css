@@ -810,14 +810,16 @@ html[data-theme='light'] .footer__link-item[href*="discord"]::before {
 
   .heroContent {
     flex-direction: column;
+    text-align: center;
   }
 
   .heroText {
-    text-align: left;
+    text-align: center;
   }
 
   .heroRight {
-    justify-content: flex-start;
+    justify-content: center;
+    margin-top: 2rem;
   }
 
   .modulesGrid {
@@ -825,7 +827,8 @@ html[data-theme='light'] .footer__link-item[href*="discord"]::before {
   }
   
   .heroIllustration { 
-    max-width: 46%; 
+    width: 300px;
+    max-width: 80%;
   }
 
   .featuresGrid {
@@ -835,7 +838,9 @@ html[data-theme='light'] .footer__link-item[href*="discord"]::before {
 
 @media screen and (max-width: 640px) {
   .heroIllustration { 
-    display: none; 
+    width: 280px;
+    max-width: 90%;
+    margin: 0 auto;
   }
   
   .heroMeta { 
