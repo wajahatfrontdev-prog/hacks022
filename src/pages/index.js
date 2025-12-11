@@ -39,22 +39,70 @@ function HomepageHeader() {
 
         <div className={styles.heroRight}>
           <div className={styles.heroIllustration} aria-hidden>
-            {/* simple illustrative SVG representing robot + nodes (no chip) */}
+            {/* Amazing Alien SVG */}
             <svg viewBox="0 0 360 240" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
               <defs>
-                <linearGradient id="g1" x1="0" x2="1">
-                  <stop offset="0%" stopColor="#7fb1ff" />
-                  <stop offset="100%" stopColor="#5b8cff" />
+                <linearGradient id="alienGlow" x1="0" x2="1" y1="0" y2="1">
+                  <stop offset="0%" stopColor="#8e2de2" />
+                  <stop offset="50%" stopColor="#4a00e0" />
+                  <stop offset="100%" stopColor="#2575fc" />
                 </linearGradient>
+                <filter id="glow">
+                  <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                  <feMerge> 
+                    <feMergeNode in="coloredBlur"/>
+                    <feMergeNode in="SourceGraphic"/> 
+                  </feMerge>
+                </filter>
               </defs>
-              <rect x="12" y="40" width="208" height="140" rx="14" fill="#07102a" opacity="0.95" />
-              <g transform="translate(40,60)">
-                <circle cx="30" cy="30" r="18" fill="#2fd3b0" opacity="0.95" />
-                <circle cx="110" cy="30" r="18" fill="#7fb1ff" opacity="0.95" />
-                <circle cx="70" cy="90" r="22" fill="#ffb86b" opacity="0.95" />
-                <path d="M48 36 L70 86" stroke="#9ab8ff" strokeWidth="2" strokeLinecap="round" />
-                <path d="M92 36 L70 86" stroke="#9ab8ff" strokeWidth="2" strokeLinecap="round" />
-              </g>
+              
+              {/* Alien Body */}
+              <ellipse cx="180" cy="160" rx="45" ry="60" fill="url(#alienGlow)" filter="url(#glow)" opacity="0.9">
+                <animateTransform attributeName="transform" type="rotate" values="0 180 160;5 180 160;0 180 160;-5 180 160;0 180 160" dur="4s" repeatCount="indefinite"/>
+              </ellipse>
+              
+              {/* Alien Head */}
+              <ellipse cx="180" cy="80" rx="55" ry="45" fill="url(#alienGlow)" filter="url(#glow)" opacity="0.95">
+                <animateTransform attributeName="transform" type="scale" values="1;1.05;1;0.98;1" dur="3s" repeatCount="indefinite"/>
+              </ellipse>
+              
+              {/* Eyes */}
+              <ellipse cx="165" cy="75" rx="12" ry="18" fill="#00ff88" opacity="0.9">
+                <animate attributeName="opacity" values="0.9;0.3;0.9" dur="2s" repeatCount="indefinite"/>
+              </ellipse>
+              <ellipse cx="195" cy="75" rx="12" ry="18" fill="#00ff88" opacity="0.9">
+                <animate attributeName="opacity" values="0.9;0.3;0.9" dur="2s" repeatCount="indefinite"/>
+              </ellipse>
+              
+              {/* Eye pupils */}
+              <circle cx="165" cy="75" r="4" fill="#000">
+                <animateTransform attributeName="transform" type="translate" values="0 0;2 -1;0 0;-2 1;0 0" dur="5s" repeatCount="indefinite"/>
+              </circle>
+              <circle cx="195" cy="75" r="4" fill="#000">
+                <animateTransform attributeName="transform" type="translate" values="0 0;2 -1;0 0;-2 1;0 0" dur="5s" repeatCount="indefinite"/>
+              </circle>
+              
+              {/* Arms */}
+              <ellipse cx="130" cy="140" rx="8" ry="25" fill="url(#alienGlow)" opacity="0.8" transform="rotate(-20 130 140)">
+                <animateTransform attributeName="transform" type="rotate" values="-20 130 140;-10 130 140;-20 130 140" dur="3s" repeatCount="indefinite"/>
+              </ellipse>
+              <ellipse cx="230" cy="140" rx="8" ry="25" fill="url(#alienGlow)" opacity="0.8" transform="rotate(20 230 140)">
+                <animateTransform attributeName="transform" type="rotate" values="20 230 140;10 230 140;20 230 140" dur="3s" repeatCount="indefinite"/>
+              </ellipse>
+              
+              {/* Floating particles */}
+              <circle cx="120" cy="60" r="2" fill="#00ff88" opacity="0.7">
+                <animateTransform attributeName="transform" type="translate" values="0 0;10 -15;0 0" dur="4s" repeatCount="indefinite"/>
+                <animate attributeName="opacity" values="0.7;0.2;0.7" dur="4s" repeatCount="indefinite"/>
+              </circle>
+              <circle cx="250" cy="90" r="1.5" fill="#8e2de2" opacity="0.6">
+                <animateTransform attributeName="transform" type="translate" values="0 0;-8 -12;0 0" dur="3.5s" repeatCount="indefinite"/>
+                <animate attributeName="opacity" values="0.6;0.1;0.6" dur="3.5s" repeatCount="indefinite"/>
+              </circle>
+              <circle cx="280" cy="120" r="2.5" fill="#4a00e0" opacity="0.5">
+                <animateTransform attributeName="transform" type="translate" values="0 0;-15 10;0 0" dur="5s" repeatCount="indefinite"/>
+                <animate attributeName="opacity" values="0.5;0.1;0.5" dur="5s" repeatCount="indefinite"/>
+              </circle>
             </svg>
           </div>
           <div className={styles.statsStrip}>

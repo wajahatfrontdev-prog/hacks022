@@ -2,32 +2,124 @@
   position: fixed;
   bottom: 30px;
   right: 30px;
-  width: 60px;
-  height: 60px;
+  width: 70px;
+  height: 70px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #8e2de2 0%, #4a00e0 100%);
   border: none;
   color: white;
   font-size: 28px;
   cursor: pointer;
-  box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 6px 25px rgba(138, 43, 226, 0.4);
   z-index: 1000;
   transition: all 0.3s ease;
   animation: pulse 2s infinite;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .floatingButton:hover {
   transform: scale(1.1);
-  box-shadow: 0 6px 30px rgba(102, 126, 234, 0.6);
+  box-shadow: 0 8px 30px rgba(138, 43, 226, 0.6);
+  animation: none;
 }
 
 @keyframes pulse {
-  0%, 100% {
-    box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
+  0% {
+    box-shadow: 0 6px 25px rgba(138, 43, 226, 0.4);
   }
   50% {
-    box-shadow: 0 4px 30px rgba(102, 126, 234, 0.8);
+    box-shadow: 0 6px 25px rgba(138, 43, 226, 0.8);
+    transform: scale(1.05);
   }
+  100% {
+    box-shadow: 0 6px 25px rgba(138, 43, 226, 0.4);
+  }
+}
+
+.authOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1001;
+}
+
+.authModal {
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  width: 90%;
+  max-width: 400px;
+  position: relative;
+}
+
+.closeAuth {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: rgba(255, 0, 0, 0.1);
+  border: 1px solid #ff4444;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  font-size: 16px;
+  cursor: pointer;
+  color: #ff4444;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.closeAuth:hover {
+  background: rgba(255, 0, 0, 0.2);
+}
+
+.authModal h3 {
+  text-align: center;
+  color: #8e2de2;
+  margin-bottom: 20px;
+}
+
+.authModal input {
+  width: 100%;
+  padding: 12px;
+  margin: 8px 0;
+  border: 2px solid #e1e5e9;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #333;
+  background: white;
+}
+
+.authModal input::placeholder {
+  color: #999;
+}
+
+.authModal button[type="submit"] {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(135deg, #8e2de2 0%, #4a00e0 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.authModal p {
+  text-align: center;
+  color: #8e2de2;
+  cursor: pointer;
+  margin-top: 15px;
+  font-size: 14px;
 }
 
 .chatWindow {
@@ -88,5 +180,13 @@
     height: calc(100vh - 120px);
     right: 10px;
     bottom: 80px;
+  }
+  
+  .floatingButton {
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    font-size: 24px;
   }
 }
